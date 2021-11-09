@@ -14,9 +14,19 @@ class Category extends GetxController {
       getAllCategory();
     }
  Future getAllCategory () async{
-   http.Response response = await http.get(Uri.parse("$url/category/get"));
-   var data = jsonDecode(response.body);
-   categories.value = data['categoryList'];
+
+      try {
+        http.Response response = await http.get(Uri.parse("$url/category/get"));
+        var data = jsonDecode(response.body);
+        categories.value = data['categoryList'];
+      }
+      catch(e) {
+        print(e);
+      }
+
+
+
+
  }
 
   Future getCategoriesById (id) async{
@@ -25,6 +35,6 @@ class Category extends GetxController {
     var data = jsonDecode(response.body);
     categoryList.value = data['data'];
       isLoading.value = true;
-    print(categoryList);
+
   }
 }

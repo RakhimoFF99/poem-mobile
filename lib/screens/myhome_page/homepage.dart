@@ -40,16 +40,14 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Center(child: GestureDetector(
                 onTap: () {
-                  category.getCategoriesById(category.categories[0]['_id']);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(title:"Ápiwayı folklorizmler" ,data: category.categories[0],)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(title:"Ápiwayı folklorizmler" ,data: category.categories[0]['children'],)));
                 },
                 child: CustomCard(title: "Ápiwayı folklorizmler",))
             ),
             SizedBox(height: 10,),
             Center(child: GestureDetector(
                 onTap: (){
-                  category.getCategoriesById(category.categories[1]['_id']);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(title: "Quramalı folklorizmler",data: category.categories[1],)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(title: "Quramalı folklorizmler",data: category.categories[1]['children'],)));
                 },
                 child: CustomCard(title: "Quramalı folklorizmler",))),
             SizedBox(height: 10,),

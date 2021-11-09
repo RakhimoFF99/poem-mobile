@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:p/getx/poemController.dart';
 import 'package:p/screens/components/customCard.dart';
 import 'package:p/getx/category.dart';
+import 'package:p/screens/poem_list/poem_list.dart';
 
 class CategoryPage extends StatelessWidget {
   final title;
@@ -10,10 +12,11 @@ class CategoryPage extends StatelessWidget {
   CategoryPage({this.title,this.data});
 
   var category = Get.put(Category());
+  var poemController = Get.put(PoemController());
 
   @override
   Widget build(BuildContext context) {
-    print(category);
+    print(data);
     Size size = MediaQuery
         .of(context)
         .size;
@@ -34,36 +37,29 @@ class CategoryPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            GetX(
-              init: Category(),
-              builder: (context) {
-                 if(category.isLoading.isTrue) {
-                  return ListView.builder(
+
+                  ListView.builder(
                        shrinkWrap: true,
                        scrollDirection: Axis.vertical,
-                       itemCount: category.categoryList.length,
+                       itemCount: data.length,
                        itemBuilder: (context, index) {
                          return Column(
                            children: [
                              Center(child: GestureDetector(
                                child: GestureDetector(
                                  child: CustomCard(
-                                   title: category.categoryList[index]['name'],),
+                                   title:data[index]['name'],),
                                ),
                                onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(title: 'sdsd',data: data,)));
+                                    data[index]['children'].length == 0 ? PoemController().getPoemById(data[index]['_id']):null;
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => data[index]['children'].length > 0 ? CategoryPage(title: data[index]['name'],data: data[index]['children']):PoemList(title: data[index]['name'],)));
                                },
                              )),
                              SizedBox(height: 10,),
                            ],
                          );
-                       });
-                 }
-                 else {
-                  return  Center(child: CircularProgressIndicator(color: Colors.white,));
-                 }
-              },
-            )
+                       })
+
 
           ],
         ),

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/state_manager.dart';
+import 'package:p/getx/category.dart';
+import 'package:get/get.dart';
+import 'package:p/getx/poemController.dart';
 import 'package:p/screens/components/customCard.dart';
 class PoemList extends StatelessWidget {
   final title;
-  const PoemList({this.title})
+    PoemList({this.title});
+  var poemController = Get.put(PoemController());
 
   @override
   Widget build(BuildContext context) {
+    print('sdsddsssdsdsddsddsd');
    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xff9A59B5),
@@ -27,25 +32,28 @@ class PoemList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GetX(
-              init: Category(),
+              init: PoemController(),
               builder: (context) {
-                if(category.isLoading.isTrue) {
+                print(poemController.poemList.length);
+                if(poemController.isLoading.isFalse) {
                   return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      itemCount: category.categoryList.length,
+                      itemCount: 15,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            Center(child: GestureDetector(
-                              child: GestureDetector(
-                                child: CustomCard(
-                                  title: category.categoryList[index]['name'],),
-                              ),
-                              onTap: () {
-
-                              },
-                            )),
+                            // Center(child: GestureDetector(
+                            //   child: GestureDetector(
+                            //     child: CustomCard(
+                            //       title: poemController.poemList[index]['name'],),
+                            //   ),
+                            //   onTap: () {
+                            //
+                            //   },
+                            // )),
+                            Text('sdsds'),
                             SizedBox(height: 10,),
                           ],
                         );
